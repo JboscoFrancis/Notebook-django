@@ -1,0 +1,46 @@
+{% extends 'note/base.html'%}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container-note pt-2">
+        <div class="note-header">
+            <h5 class="text-center"><a href="{% url 'index' %}" style="color: whitesmoke;"><i class="fas fa-arrow-left mr-4 ml-0"></i></a>Notebook</h5>
+            <hr>
+        </div>
+        <div class="note">
+            <div class="d-none mt-2" id="note-form">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-inline mb-1">
+                        <span><a href="{% url 'detail' note.id %}"><i class="fas fa-arrow-left"></i></a></span>
+                        <h5 class="ml-3">Edit note</h5>
+                    </div>
+                    {{form}}
+                    <div>
+                        <button class="btn btn-success btn-sm mt-2 center btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div id="note-container">
+                <span class="badge bg-{{note.label}}">{{note.get_category_display}}</span>
+                <span class="badge" style="color: rgb(117, 252, 252); font-style: italic;">{{note.date_created}}</span>
+                <a href="{% url 'delete' note.id %}" id='del-btn'><i class="far fa-trash-alt"></i></a>
+                <p class="mt-2">{{note}}</p>
+            </div>
+        </div>
+        <div class="note-footer">
+            <hr>
+            <button class="btn btn-outline-warning btn-sm mt-2 center" id="edit-note">Edit note</button>
+        </div>
+    </div>
+</div>
+<script>
+    var edtbtn = document.getElementById('edit-note')
+    edtbtn.addEventListener('click', function(event){
+        event.preventDefault()
+        document.getElementById('edit-note').classList.add('d-none')
+        document.getElementById('note-form').classList.remove('d-none')
+        document.getElementById('note-container').classList.add('d-none')
+    })
+</script>
+{% endblock %}

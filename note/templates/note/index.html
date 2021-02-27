@@ -1,0 +1,75 @@
+{% extends 'note/base.html'%}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container-note pt-2">
+        <div class="note-header">
+            <h5 class="text-center">Notebook</h5>
+            <hr>
+        </div>
+        <div class="note ml-2 mr-2">
+            <div class="d-none mt-2" id="note-form">
+                <div class="form-inline mb-1">
+                    <span><a href="{% url 'index'%}"><i class="fas fa-arrow-left"></i></a></span>
+                    <h5 class="ml-3">Add note</h5>
+                </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    <div>
+                        <button class="btn btn-success mt-2 btn-sm center btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div id="note-container">
+                {% for note in note %}
+                {% if note.category == 'ho'%}
+                <div class="">
+                    {% if note.complete == True %}
+                    <i class="fas fa-home"></i> </i><span><a href="{% url 'detail' note.id %}"><strike>{{note}}</strike></a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#fb743e"><i class="fas fa-times"></i></a>
+                    {% else %}
+                    <i class="fas fa-home"></i> </i><span><a href="{% url 'detail' note.id %}">{{note}}</a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#ffd384"><i class="fas fa-check"></i></a>
+                    {% endif %}
+                </div>
+                <hr>
+                {% elif note.category == 'wo' %}
+                <div class="">
+                    {% if note.complete == True %}
+                    <i class="fas fa-building"></i> </i><span><a href="{% url 'detail' note.id %}"><strike>{{note}}</strike></a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#fb743e"><i class="fas fa-times"></i></a>
+                    {% else %}
+                    <i class="fas fa-building"></i> </i><span><a href="{% url 'detail' note.id %}">{{note}}</a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#ffd384"><i class="fas fa-check"></i></a>
+                    {% endif %}
+                </div>
+                <hr>
+                {% else %}
+                <div class="">
+                    {% if note.complete == True %}
+                    <i class="fas fa-laptop-code"></i> </i><span><a href="{% url 'detail' note.id %}"><strike>{{note}}</strike></a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#fb743e"><i class="fas fa-times"></i></a>
+                    {% else %}
+                    <i class="fas fa-laptop-code"></i> </i><span><a href="{% url 'detail' note.id %}">{{note}}</a></span>
+
+                    <a data-note="{{note.id}}" data-action="{{note.complete}}" class="complete mr-1" href="" style="float: right; color:#ffd384"><i class="fas fa-check"></i></a>
+                    {% endif %}
+                </div>
+                <hr>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="note-footer">
+            <hr>
+            <button class="btn btn-outline-warning btn-sm mt-2 mb-2 center" id="add-note">Add note</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
